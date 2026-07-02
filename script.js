@@ -1,87 +1,92 @@
-// 1. Establecer fecha de hoy por defecto
-document.getElementById('invoice-date').value = new Date().toISOString().slice(0, 10);
-
-// 2. Catálogo de Ropa (Puedes cambiar los nombres y precios a tu gusto)
-const CATALOGO_ROPA = {
-    "jean-hombre": { desc: "Jeans para Hombre", precio: 35.00 },
-    "jean-mujer": { desc: "Jeans para Mujer", precio: 38.00 },
-    "camiseta-basic": { desc: "Camiseta Básica Oversize", precio: 15.50 },
-    "chamarra-cuero": { desc: "Chamarra de Cuero", precio: 65.00 },
-    "vestido-casual": { desc: "Vestido Casual de Verano", precio: 28.00 },
-    "sueter-lana": { desc: "Suéter de Lana", precio: 40.00 }
+// 1. Catálogo de productos con sus precios por defecto
+const CATALOGO_PRECIOS = {
+    "Camiseta Básica": 15.00,
+    "Camiseta Polo": 22.50,
+    "Jean Slim": 35.00,
+    "Jean Clásico": 32.00,
+    "Vestido Casual": 28.00,
+    "Vestido Elegante": 55.00,
+    "Chaqueta Denim": 45.00,
+    "Chaqueta Cuero": 75.00,
+    "Blusa Manga Larga": 18.50,
+    "Blusa Casual": 16.00,
+    "Short Deportivo": 12.50,
+    "Zapatos Deportivos": 60.00,
+    "Zapatos Casuales": 48.00,
+    "Bolso Casual": 25.00,
+    "Cinturón": 10.00,
+    "Gorra": 12.00
 };
 
-// 3. Cargar ítems guardados previamente o iniciar vacío
-let items = JSON.parse(localStorage.getItem('factura_items')) || [];
+// Variables globales
+let items = [];
 const IVA_RATE = 0.15; // 15% de IVA
 
-// Ejecutar al cargar la página por si había datos guardados
-updateTable();
-
-// 4. Función para auto-llenar el precio cuando elijas ropa del catálogo
-function cargarPrecioPrenda() {
-    const selectPrenda = document.getElementById('prod-desc');
-    const inputPrecio = document.getElementById('prod-price');
+// 2. Al cargar la página, inicializar datos básicos
+document.addEventListener("DOMContentLoaded", () => {
+    // Establecer fecha de hoy
+    document.getElementById('invoice-date').value = new Date().toISOString().slice(0, 10);
     
-    // Si la opción seleccionada existe en el catálogo, autocompleta el precio
-    if (CATALOGO_ROPA[selectPrenda.value]) {
-        inputPrecio.value = CATALOGO_ROPA[selectPrenda.value].precio.toFixed(2);
+    // Cargar número de factura correlativo desde localStorage
+    let numFactura = localStorage.getItem('siguiente_factura_num') || 1;
+    document.getElementById('factura').value = `FAC-${String(numFactura).padStart(4, '0')}`;
+
+    // Escuchar el cambio de producto para auto-llenar el precio
+    document.getElementById('prod-desc').addEventListener('change', cargarPrecioProducto);
+});
+
+// 3. Función para colocar el precio automático
+function cargarPrecioProducto() {
+    const productoSeleccionado = document.getElementById('prod-desc').value;
+    const inputPrecio = document.getElementById('prod-price');
+
+    if (CATALOGO_PRECIOS[productoSeleccionado]) {
+        inputPrecio.value = CATALOGO_PRECIOS[productoSeleccionado].toFixed(2);
     } else {
-        inputPrecio.value = "0.00";
+        inputPrecio.value = '';
     }
 }
 
-// 5. Añadir prenda a la lista
+// 4. Agregar ítem a la factura
 function addItem() {
-    const selectPrenda = document.getElementById('prod-desc');
+    const categoria = document.getElementById('categoria').value;
+    const desc = document.getElementById('prod-desc').value;
     const qty = parseInt(document.getElementById('prod-qty').value);
     const price = parseFloat(document.getElementById('prod-price').value);
 
-    // Obtener el texto visible del producto seleccionado (ej: "Jeans para Hombre")
-    let desc = selectPrenda.options[selectPrenda.selectedIndex].text;
-
-    // Si elige "Otro" o escribe manualmente
-    if (selectPrenda.value === "otro") {
-        const descripcionManual = prompt("Escribe la descripción de la prenda:");
-        if (!descripcionManual) return;
-        desc = descripcionManual;
-    }
-
-    if (selectPrenda.value === "" || isNaN(qty) || isNaN(price) || qty <= 0 || price < 0) {
-        alert("Por favor, seleccione una prenda y coloque cantidades válidas.");
+    if (!categoria || !desc || isNaN(qty) || isNaN(price) || qty <= 0 || price < 0) {
+        alert("Por favor, complete todos los campos del producto con valores válidos.");
         return;
     }
 
     const item = {
         id: Date.now(),
-        desc: desc,
-        qty: qty,
-        price: price,
+        categoria,
+        desc,
+        qty,
+        price,
         total: qty * price
     };
 
     items.push(item);
-    guardarEnAlmacenamiento();
     updateTable();
-    
-    // Resetear formulario de producto
-    selectPrenda.value = '';
+
+    // Resetear formulario de productos
+    document.getElementById('categoria').value = '';
+    document.getElementById('prod-desc').value = '';
     document.getElementById('prod-qty').value = '1';
-    document.getElementById('prod-price').value = '0.00';
+    document.getElementById('prod-price').value = '';
 }
 
-// 6. Eliminar prenda
+// 5. Eliminar ítem de la tabla
 function deleteItem(id) {
     items = items.filter(item => item.id !== id);
-    guardarEnAlmacenamiento();
     updateTable();
 }
 
-// 7. Actualizar la tabla y totales en pantalla
+// 6. Actualizar tabla y cálculos totales
 function updateTable() {
     const tbody = document.getElementById('invoice-items');
-    if (!tbody) return; // Evita errores si el HTML no ha cargado totalmente
-    
     tbody.innerHTML = '';
     let subtotal = 0;
 
@@ -89,12 +94,13 @@ function updateTable() {
         subtotal += item.total;
         const tr = document.createElement('tr');
         tr.innerHTML = `
+            <td>${item.categoria}</td>
             <td>${item.desc}</td>
             <td>${item.qty}</td>
             <td>$${item.price.toFixed(2)}</td>
             <td>$${item.total.toFixed(2)}</td>
             <td class="no-print">
-                <button class="btn-danger" style="padding: 5px 10px;" onclick="deleteItem(${item.id})">Eliminar</button>
+                <button class="btn-danger" style="padding: 5px 10px; margin: 0;" onclick="deleteItem(${item.id})">Eliminar</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -108,18 +114,48 @@ function updateTable() {
     document.getElementById('total').innerText = `$${total.toFixed(2)}`;
 }
 
-// 8. Guardar datos de manera local (Persistencia)
-function guardarEnAlmacenamiento() {
-    localStorage.setItem('factura_items', JSON.stringify(items));
+// 7. Guardar Factura (Simulación local)
+function guardarFactura() {
+    if (items.length === 0) {
+        alert("No hay productos en la factura para guardar.");
+        return;
+    }
+
+    const cliente = document.getElementById('client-name').value.trim();
+    if (!cliente) {
+        alert("Por favor ingrese el nombre del cliente.");
+        return;
+    }
+
+    // Guardamos la información en un alert o consola y aumentamos el número de factura
+    alert(`Factura ${document.getElementById('factura').value} guardada con éxito para el cliente ${cliente}.`);
+    
+    // Incrementar número de factura para la próxima
+    let numFactura = parseInt(localStorage.getItem('siguiente_factura_num') || 1);
+    localStorage.setItem('siguiente_factura_num', numFactura + 1);
+
+    // Forzar el inicio de una nueva limpieza limpia
+    clearInvoice(false); 
 }
 
-// 9. Limpiar toda la factura
-function clearInvoice() {
-    if(confirm("¿Seguro que deseas limpiar la factura?")) {
-        items = [];
-        localStorage.removeItem('factura_items');
-        updateTable();
-        document.getElementById('client-name').value = '';
-        document.getElementById('client-id').value = '';
+// 8. Limpiar la Factura
+function clearInvoice(confirmacion = true) {
+    if (confirmacion && !confirm("¿Seguro que deseas vaciar y crear una nueva factura?")) {
+        return;
     }
+
+    // Resetear datos de tabla
+    items = [];
+    updateTable();
+
+    // Resetear inputs de cliente
+    document.getElementById('client-name').value = '';
+    document.getElementById('client-id').value = '';
+    document.getElementById('telefono').value = '';
+    document.getElementById('correo').value = '';
+    document.getElementById('direccion').value = '';
+    
+    // Actualizar número de factura en pantalla
+    let numFactura = localStorage.getItem('siguiente_factura_num') || 1;
+    document.getElementById('factura').value = `FAC-${String(numFactura).padStart(4, '0')}`;
 }
