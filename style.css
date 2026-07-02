@@ -1,9 +1,9 @@
 :root {
-    --primary: #1a1a1a;       /* Negro elegante boutique */
-    --accent: #d4af37;        /* Dorado sutil para detalles decorativos */
-    --secondary: #2ecc71;     /* Verde para botones positivos */
-    --danger: #e74c3c;        /* Rojo para borrar/cancelar */
-    --bg-body: #f4f6f7;       /* Fondo suave */
+    --primary: #1a1a1a;       
+    --accent: #d4af37;        
+    --secondary: #2ecc71;     
+    --danger: #e74c3c;        
+    --bg-body: #f4f6f7;       
     --dark-text: #2c3e50;
 }
 
@@ -56,7 +56,6 @@ hr {
     margin: 25px 0;
 }
 
-/* Grillas responsivas */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -70,7 +69,6 @@ hr {
     align-items: flex-end;
 }
 
-/* Inputs y Selects modernos */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -106,7 +104,6 @@ input[readonly] {
     color: var(--primary);
 }
 
-/* Botones */
 button {
     background-color: var(--primary);
     color: white;
@@ -123,10 +120,6 @@ button:hover {
     background-color: #333333;
 }
 
-button:active {
-    transform: scale(0.98);
-}
-
 .btn-danger {
     background-color: var(--danger);
 }
@@ -135,7 +128,6 @@ button:active {
     background-color: #c0392b;
 }
 
-/* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -156,7 +148,6 @@ th {
     font-size: 0.85rem;
 }
 
-/* Totales a la derecha */
 .totals {
     float: right;
     width: 320px;
@@ -183,7 +174,6 @@ th {
     margin-bottom: 0;
 }
 
-/* Caja de botones de acción */
 .actions {
     clear: both;
     padding-top: 40px;
@@ -192,31 +182,15 @@ th {
     gap: 12px;
 }
 
-/* Optimización para teléfonos móviles */
 @media (max-width: 768px) {
-    .grid-productos {
-        grid-template-columns: 1fr;
-    }
-    .totals {
-        width: 100%;
-        float: none;
-    }
-    .actions {
-        flex-direction: column;
-    }
+    .grid-productos { grid-template-columns: 1fr; }
+    .totals { width: 100%; float: none; }
+    .actions { flex-direction: column; }
 }
 
 @media print {
-    body {
-        background: white;
-        padding: 0;
-    }
-    .container {
-        box-shadow: none;
-        padding: 0;
-        max-width: 100%;
-    }
-    /* Ocultamos los botones y el panel de agregar productos */
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; padding: 0; max-width: 100%; }
     .actions, .grid-productos, th:last-child, td:last-child, .no-print {
         display: none !important;
     }
@@ -226,6 +200,6 @@ th {
         padding: 0 !important;
         font-size: 1rem;
         color: black;
-        appearance: none; /* Quita flechas de select */
+        appearance: none;
     }
 }
