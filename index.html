@@ -16,38 +16,77 @@
             <label>Cliente:</label>
             <input type="text" id="client-name" placeholder="Nombre del cliente">
         </div>
+
         <div class="form-group">
             <label>RUC / Cédula:</label>
             <input type="text" id="client-id" placeholder="0000000000">
         </div>
+
         <div class="form-group">
             <label>Fecha:</label>
             <input type="date" id="invoice-date">
         </div>
     </div>
 
+    <!-- 🔥 CATEGORÍAS -->
+    <div class="grid">
+        <div class="form-group">
+            <label>Categoría:</label>
+            <select id="category">
+                <option value="">Seleccione categoría</option>
+                <option value="camisas">Camisas</option>
+                <option value="pantalones">Pantalones</option>
+                <option value="vestidos">Vestidos</option>
+                <option value="chaquetas">Chaquetas</option>
+                <option value="zapatos">Zapatos</option>
+                <option value="accesorios">Accesorios</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Producto:</label>
+            <select id="product">
+                <option value="">Seleccione producto</option>
+                <option value="camisa">Camisa Polo</option>
+                <option value="jeans">Jeans Azul</option>
+                <option value="vestido">Vestido Floral</option>
+                <option value="chaqueta">Chaqueta Negra</option>
+                <option value="zapatos">Zapatos Deportivos</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- AGREGAR PRODUCTOS -->
     <div class="no-print">
         <h3>Agregar Productos</h3>
+
         <div class="grid" style="grid-template-columns: 3fr 1fr 1fr auto;">
+            
             <div class="form-group">
                 <label>Descripción</label>
-                <input type="text" id="prod-desc" placeholder="Ej. Laptop Dell">
+                <input type="text" id="prod-desc" placeholder="Ej. Camisa Polo">
             </div>
+
             <div class="form-group">
                 <label>Cantidad</label>
                 <input type="number" id="prod-qty" value="1" min="1">
             </div>
+
             <div class="form-group">
                 <label>Precio Unitario</label>
                 <input type="number" id="prod-price" value="0.00" step="0.01">
             </div>
+
             <div class="form-group" style="justify-content: flex-end;">
                 <button type="button" onclick="addItem()">Añadir</button>
             </div>
+
         </div>
     </div>
 
+    <!-- TABLA -->
     <h3>Detalle de la Factura</h3>
+
     <table>
         <thead>
             <tr>
@@ -61,6 +100,7 @@
         <tbody id="invoice-items"></tbody>
     </table>
 
+    <!-- TOTALES -->
     <div class="totals">
         <div><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
         <div><span>IVA (15%):</span><span id="iva">$0.00</span></div>
