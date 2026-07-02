@@ -2,3 +2,4 @@
 # Integrantes
 
 Andre Lara
+Jennyfer Lamiña
