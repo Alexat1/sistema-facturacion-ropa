@@ -1,121 +1,233 @@
 :root {
-    --primary: #2c3e50;
-    --secondary: #18bc9c;
-    --dark: #333;
-    --light: #f8f9fa;
+    --primary: #1a1a1a;       /* Negro elegante boutique */
+    --accent: #d4af37;        /* Dorado sutil para detalles decorativos */
+    --secondary: #2ecc71;     /* Verde para botones positivos */
+    --danger: #e74c3c;        /* Rojo para borrar/cancelar */
+    --bg-body: #f4f6f7;       /* Fondo suave */
+    --dark-text: #2c3e50;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--dark-text);
     margin: 0;
     padding: 20px;
-    background-color: #eef2f3;
-    color: var(--dark);
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-h2, h3 {
+/* Encabezados estilo Boutique */
+h1 {
+    text-align: center;
     color: var(--primary);
-    border-bottom: 2px solid var(--light);
-    padding-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
+h2 {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    margin-top: 0;
+    font-weight: 400;
+}
+
+h3 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-top: 30px;
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 25px 0;
+}
+
+/* Grillas responsivas */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
 }
 
+.grid-productos {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+/* Inputs y Selects modernos */
 .form-group {
     display: flex;
     flex-direction: column;
 }
 
 label {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    font-size: 0.85rem;
     font-weight: 600;
+    margin-bottom: 6px;
+    color: #555;
+    text-transform: uppercase;
 }
 
 input, select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 11px 15px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
 }
 
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+input[readonly] {
+    background-color: #eaeded;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Botones */
 button {
-    background-color: var(--secondary);
+    background-color: var(--primary);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-button:hover { background-color: #128f76; }
-button.btn-danger { background-color: #e74c3c; }
-button.btn-danger:hover { background-color: #c0392b; }
+button:hover {
+    background-color: #333333;
+}
 
+button:active {
+    transform: scale(0.98);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-top: 15px;
 }
 
 th, td {
-    padding: 12px;
+    padding: 14px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-th { background-color: var(--primary); color: white; }
+th {
+    background-color: #f8f9fa;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
 
+/* Totales a la derecha */
 .totals {
     float: right;
-    width: 300px;
-    background: var(--light);
-    padding: 15px;
-    border-radius: 4px;
-    margin-top: 20px;
+    width: 320px;
+    margin-top: 30px;
+    background: #fdfefe;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .totals div {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
+    margin-bottom: 12px;
+    font-size: 1rem;
 }
 
 .totals .grand-total {
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.3rem;
     color: var(--primary);
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
+    border-top: 2px dashed #e0e0e0;
+    padding-top: 12px;
+    margin-bottom: 0;
 }
 
+/* Caja de botones de acción */
 .actions {
-    margin-top: 30px;
     clear: both;
+    padding-top: 40px;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 12px;
 }
 
+/* Optimización para teléfonos móviles */
+@media (max-width: 768px) {
+    .grid-productos {
+        grid-template-columns: 1fr;
+    }
+    .totals {
+        width: 100%;
+        float: none;
+    }
+    .actions {
+        flex-direction: column;
+    }
+}
+
+/* 🖨️ Estilos Especiales para Impresión Física o PDF */
 @media print {
-    body { background: white; padding: 0; }
-    .container { box-shadow: none; padding: 0; }
-    .no-print { display: none !important; }
-    input, select { border: none; background: transparent; pointer-events: none; }
+    body {
+        background: white;
+        padding: 0;
+    }
+    .container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+    }
+    /* Ocultamos los botones y el panel de agregar productos */
+    .actions, .grid-productos, th:last-child, td:last-child, .no-print {
+        display: none !important;
+    }
+    input, select {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 1rem;
+        color: black;
+        appearance: none; /* Quita flechas de select */
+    }
 }
