@@ -1,1 +1,121 @@
-creación del archivo estilos
+:root {
+    --primary: #2c3e50;
+    --secondary: #18bc9c;
+    --dark: #333;
+    --light: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #eef2f3;
+    color: var(--dark);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--light);
+    padding-bottom: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+button:hover { background-color: #128f76; }
+button.btn-danger { background-color: #e74c3c; }
+button.btn-danger:hover { background-color: #c0392b; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th { background-color: var(--primary); color: white; }
+
+.totals {
+    float: right;
+    width: 300px;
+    background: var(--light);
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.totals div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.totals .grand-total {
+    font-weight: bold;
+    color: var(--primary);
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.actions {
+    margin-top: 30px;
+    clear: both;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media print {
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; padding: 0; }
+    .no-print { display: none !important; }
+    input, select { border: none; background: transparent; pointer-events: none; }
+}
