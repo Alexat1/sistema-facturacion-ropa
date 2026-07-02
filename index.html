@@ -1,118 +1,255 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Facturación</title>
+    <title>Sistema de Facturación - Tienda de Ropa</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
-    <h2>Factura Proforma</h2>
-    
+
+    <h1>👕 Boutique Fashion</h1>
+    <h2>Sistema de Facturación</h2>
+
+    <hr>
+
+    <h3>Datos del Cliente</h3>
+
     <div class="grid">
+
         <div class="form-group">
-            <label>Cliente:</label>
-            <input type="text" id="client-name" placeholder="Nombre del cliente">
+            <label>Nombre del Cliente</label>
+            <input type="text" id="client-name" placeholder="Ingrese el nombre">
         </div>
 
         <div class="form-group">
-            <label>RUC / Cédula:</label>
-            <input type="text" id="client-id" placeholder="0000000000">
+            <label>Cédula / RUC</label>
+            <input type="text" id="client-id" placeholder="Ingrese la cédula">
         </div>
 
         <div class="form-group">
-            <label>Fecha:</label>
+            <label>Teléfono</label>
+            <input type="text" id="telefono" placeholder="0999999999">
+        </div>
+
+        <div class="form-group">
+            <label>Correo</label>
+            <input type="email" id="correo" placeholder="correo@gmail.com">
+        </div>
+
+        <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" id="direccion" placeholder="Dirección">
+        </div>
+
+        <div class="form-group">
+            <label>Fecha</label>
             <input type="date" id="invoice-date">
         </div>
-    </div>
-
-    <!-- 🔥 CATEGORÍAS -->
-    <div class="grid">
-        <div class="form-group">
-            <label>Categoría:</label>
-            <select id="category">
-                <option value="">Seleccione categoría</option>
-                <option value="camisas">Camisas</option>
-                <option value="pantalones">Pantalones</option>
-                <option value="vestidos">Vestidos</option>
-                <option value="chaquetas">Chaquetas</option>
-                <option value="zapatos">Zapatos</option>
-                <option value="accesorios">Accesorios</option>
-            </select>
-        </div>
 
         <div class="form-group">
-            <label>Producto:</label>
-            <select id="product">
-                <option value="">Seleccione producto</option>
-                <option value="camisa">Camisa Polo</option>
-                <option value="jeans">Jeans Azul</option>
-                <option value="vestido">Vestido Floral</option>
-                <option value="chaqueta">Chaqueta Negra</option>
-                <option value="zapatos">Zapatos Deportivos</option>
+            <label>No. Factura</label>
+            <input type="text" id="factura" value="FAC-0001" readonly>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h3>Agregar Productos</h3>
+
+    <div class="grid-productos">
+
+        <div class="form-group">
+
+            <label>Categoría</label>
+
+            <select id="categoria">
+
+                <option value="">Seleccione</option>
+
+                <option>👕 Camisetas</option>
+
+                <option>👖 Pantalones</option>
+
+                <option>👗 Vestidos</option>
+
+                <option>🧥 Chaquetas</option>
+
+                <option>👚 Blusas</option>
+
+                <option>🩳 Shorts</option>
+
+                <option>👟 Zapatos</option>
+
+                <option>👜 Accesorios</option>
+
             </select>
-        </div>
-    </div>
-
-    <!-- AGREGAR PRODUCTOS -->
-    <div class="no-print">
-        <h3>Agregar Productos</h3>
-
-        <div class="grid" style="grid-template-columns: 3fr 1fr 1fr auto;">
-            
-            <div class="form-group">
-                <label>Descripción</label>
-                <input type="text" id="prod-desc" placeholder="Ej. Camisa Polo">
-            </div>
-
-            <div class="form-group">
-                <label>Cantidad</label>
-                <input type="number" id="prod-qty" value="1" min="1">
-            </div>
-
-            <div class="form-group">
-                <label>Precio Unitario</label>
-                <input type="number" id="prod-price" value="0.00" step="0.01">
-            </div>
-
-            <div class="form-group" style="justify-content: flex-end;">
-                <button type="button" onclick="addItem()">Añadir</button>
-            </div>
 
         </div>
+
+        <div class="form-group">
+
+            <label>Producto</label>
+
+            <select id="prod-desc">
+
+                <option value="">Seleccione un producto</option>
+
+                <option>Camiseta Básica</option>
+
+                <option>Camiseta Polo</option>
+
+                <option>Jean Slim</option>
+
+                <option>Jean Clásico</option>
+
+                <option>Vestido Casual</option>
+
+                <option>Vestido Elegante</option>
+
+                <option>Chaqueta Denim</option>
+
+                <option>Chaqueta Cuero</option>
+
+                <option>Blusa Manga Larga</option>
+
+                <option>Blusa Casual</option>
+
+                <option>Short Deportivo</option>
+
+                <option>Zapatos Deportivos</option>
+
+                <option>Zapatos Casuales</option>
+
+                <option>Bolso Casual</option>
+
+                <option>Cinturón</option>
+
+                <option>Gorra</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Cantidad</label>
+
+            <input type="number" id="prod-qty" min="1" value="1">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Precio</label>
+
+            <input type="number" id="prod-price" step="0.01">
+
+        </div>
+
+        <div class="form-group">
+
+            <button type="button" onclick="addItem()">
+
+                Agregar Producto
+
+            </button>
+
+        </div>
+
     </div>
 
-    <!-- TABLA -->
+    <hr>
+
     <h3>Detalle de la Factura</h3>
 
     <table>
+
         <thead>
+
             <tr>
-                <th>Descripción</th>
+
+                <th>Categoría</th>
+
+                <th>Producto</th>
+
                 <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
-                <th class="no-print">Acción</th>
+
+                <th>Precio</th>
+
+                <th>Subtotal</th>
+
+                <th>Acción</th>
+
             </tr>
+
         </thead>
-        <tbody id="invoice-items"></tbody>
+
+        <tbody id="invoice-items">
+
+        </tbody>
+
     </table>
 
-    <!-- TOTALES -->
     <div class="totals">
-        <div><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
-        <div><span>IVA (15%):</span><span id="iva">$0.00</span></div>
-        <div class="grand-total"><span>Total a Pagar:</span><span id="total">$0.00</span></div>
+
+        <div>
+
+            <span>Subtotal:</span>
+
+            <span id="subtotal">$0.00</span>
+
+        </div>
+
+        <div>
+
+            <span>IVA (15%):</span>
+
+            <span id="iva">$0.00</span>
+
+        </div>
+
+        <div class="grand-total">
+
+            <span>Total:</span>
+
+            <span id="total">$0.00</span>
+
+        </div>
+
     </div>
 
-    <div class="actions no-print">
-        <button class="btn-danger" onclick="clearInvoice()">Limpiar</button>
-        <button onclick="window.print()">Imprimir / Guardar PDF</button>
+    <div class="actions">
+
+        <button class="btn-danger" onclick="clearInvoice()">
+
+            Nueva Factura
+
+        </button>
+
+        <button onclick="window.print()">
+
+            Imprimir Factura
+
+        </button>
+
+        <button onclick="guardarFactura()">
+
+            Guardar Factura
+
+        </button>
+
     </div>
+
 </div>
 
 <script src="script.js"></script>
+
 </body>
+
 </html>
