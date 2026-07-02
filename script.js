@@ -1,4 +1,4 @@
-// 1. Catálogo de productos con sus precios por defecto
+// Catálogo interno con los precios correspondientes a tu menú desplegable
 const CATALOGO_PRECIOS = {
     "Camiseta Básica": 15.00,
     "Camiseta Polo": 22.50,
@@ -18,24 +18,18 @@ const CATALOGO_PRECIOS = {
     "Gorra": 12.00
 };
 
-// Variables globales
 let items = [];
-const IVA_RATE = 0.15; // 15% de IVA
+const IVA_RATE = 0.15; 
 
-// 2. Al cargar la página, inicializar datos básicos
+// Inicializaciones cuando la página carga por completo
 document.addEventListener("DOMContentLoaded", () => {
-    // Establecer fecha de hoy
     document.getElementById('invoice-date').value = new Date().toISOString().slice(0, 10);
     
-    // Cargar número de factura correlativo desde localStorage
     let numFactura = localStorage.getItem('siguiente_factura_num') || 1;
     document.getElementById('factura').value = `FAC-${String(numFactura).padStart(4, '0')}`;
-
-    // Escuchar el cambio de producto para auto-llenar el precio
-    document.getElementById('prod-desc').addEventListener('change', cargarPrecioProducto);
 });
 
-// 3. Función para colocar el precio automático
+// Coloca el precio de forma automática según la prenda seleccionada
 function cargarPrecioProducto() {
     const productoSeleccionado = document.getElementById('prod-desc').value;
     const inputPrecio = document.getElementById('prod-price');
@@ -47,7 +41,6 @@ function cargarPrecioProducto() {
     }
 }
 
-// 4. Agregar ítem a la factura
 function addItem() {
     const categoria = document.getElementById('categoria').value;
     const desc = document.getElementById('prod-desc').value;
@@ -78,13 +71,11 @@ function addItem() {
     document.getElementById('prod-price').value = '';
 }
 
-// 5. Eliminar ítem de la tabla
 function deleteItem(id) {
     items = items.filter(item => item.id !== id);
     updateTable();
 }
 
-// 6. Actualizar tabla y cálculos totales
 function updateTable() {
     const tbody = document.getElementById('invoice-items');
     tbody.innerHTML = '';
@@ -114,7 +105,6 @@ function updateTable() {
     document.getElementById('total').innerText = `$${total.toFixed(2)}`;
 }
 
-// 7. Guardar Factura (Simulación local)
 function guardarFactura() {
     if (items.length === 0) {
         alert("No hay productos en la factura para guardar.");
@@ -127,35 +117,28 @@ function guardarFactura() {
         return;
     }
 
-    // Guardamos la información en un alert o consola y aumentamos el número de factura
-    alert(`Factura ${document.getElementById('factura').value} guardada con éxito para el cliente ${cliente}.`);
+    alert(`Factura ${document.getElementById('factura').value} guardada con éxito.`);
     
-    // Incrementar número de factura para la próxima
     let numFactura = parseInt(localStorage.getItem('siguiente_factura_num') || 1);
     localStorage.setItem('siguiente_factura_num', numFactura + 1);
 
-    // Forzar el inicio de una nueva limpieza limpia
     clearInvoice(false); 
 }
 
-// 8. Limpiar la Factura
 function clearInvoice(confirmacion = true) {
     if (confirmacion && !confirm("¿Seguro que deseas vaciar y crear una nueva factura?")) {
         return;
     }
 
-    // Resetear datos de tabla
     items = [];
     updateTable();
 
-    // Resetear inputs de cliente
     document.getElementById('client-name').value = '';
     document.getElementById('client-id').value = '';
     document.getElementById('telefono').value = '';
     document.getElementById('correo').value = '';
     document.getElementById('direccion').value = '';
     
-    // Actualizar número de factura en pantalla
     let numFactura = localStorage.getItem('siguiente_factura_num') || 1;
     document.getElementById('factura').value = `FAC-${String(numFactura).padStart(4, '0')}`;
 }
